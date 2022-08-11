@@ -2,6 +2,7 @@
 // mpio wavy connect
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -332,8 +333,8 @@ void loop::connect(
 		double timeout_sec, connect_callback_t callback)
 {
 	struct timespec timeout = {
-		timeout_sec,
-		((timeout_sec - (double)(time_t)timeout_sec) * 1e9) };
+		static_cast<time_t>(timeout_sec),
+		static_cast<long>((timeout_sec - (double)(time_t)timeout_sec) * 1e9) };
 	return connect(socket_family, socket_type, protocol,
 			addr, addrlen, &timeout, callback);
 }

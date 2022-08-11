@@ -2,6 +2,7 @@
 // mpio wavy timer
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -36,7 +37,7 @@ int loop::add_timer(const timespec* value, const timespec* interval,
 static inline struct timespec sec2spec(double sec)
 {
 	struct timespec spec = {
-		sec, ((sec - (double)(time_t)sec) * 1e9) };
+		static_cast<time_t>(sec), static_cast<long>((sec - (double)(time_t)sec) * 1e9) };
 	return spec;
 }
 

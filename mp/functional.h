@@ -2,6 +2,7 @@
 // mp::functional
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -19,32 +20,12 @@
 #define MP_FUNCTIONAL_H__
 
 #ifdef MP_FUNCTIONAL_BOOST
-#include <boost/tr1/functional.hpp>
-namespace mp {
-	using std::tr1::function;
-	using std::tr1::bind;
-	namespace placeholders {
-		using namespace std::tr1::placeholders;
-	}
-}
-#else
-#ifdef MP_FUNCTIONAL_BOOST_ORG
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 namespace mp {
 	using boost::function;
 	using boost::bind;
 	namespace placeholders { }
-}
-#else
-#ifndef MP_FUNCTIONAL_STANDARD
-#include <tr1/functional>
-namespace mp {
-	using std::tr1::function;
-	using std::tr1::bind;
-	namespace placeholders {
-		using namespace std::tr1::placeholders;
-	}
 }
 #else
 #include <functional>
@@ -55,8 +36,6 @@ namespace mp {
 		using namespace std::placeholders;
 	}
 }
-#endif
-#endif
 #endif
 
 #endif /* mp/functional.h */

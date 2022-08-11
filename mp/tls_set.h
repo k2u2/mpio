@@ -2,6 +2,7 @@
 // mpio tls_set
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -77,7 +78,7 @@ public:
 	{
 		all_vec_ref ref(m_all_vec);
 
-		std::auto_ptr<element> e(new element(data));
+		std::unique_ptr<element> e(new element(data));
 
 		ref->push_back(e.get());
 

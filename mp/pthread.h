@@ -2,6 +2,7 @@
 // mpio pthread
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -46,7 +47,7 @@ public:
 
 	void run(function_t func)
 	{
-		std::auto_ptr<function_t> f(new function_t(func));
+		std::unique_ptr<function_t> f(new function_t(func));
 		create(&trampoline, reinterpret_cast<void*>(f.get()));
 		f.release();
 	}
@@ -421,7 +422,7 @@ namespace mp {
 
 inline void* pthread_thread::trampoline(void* user)
 try {
-	std::auto_ptr<function_t> f(reinterpret_cast<function_t*>(user));
+	std::unique_ptr<function_t> f(reinterpret_cast<function_t*>(user));
 	(*f)();
 	return NULL;
 

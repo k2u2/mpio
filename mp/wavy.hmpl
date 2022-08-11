@@ -2,6 +2,7 @@
 // mpio wavy
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -126,7 +127,7 @@ public:
 
 	template <typename T>
 	void write(int fd, const void* buf, size_t size,
-			std::auto_ptr<T>& fin);
+			std::unique_ptr<T>& fin);
 
 	template <typename T>
 	void write(int fd, const void* buf, size_t size,
@@ -138,7 +139,7 @@ public:
 
 	template <typename T>
 	void writev(int fd, const struct iovec* vec, size_t veclen,
-			std::auto_ptr<T>& fin);
+			std::unique_ptr<T>& fin);
 
 	template <typename T>
 	void writev(int fd, const struct iovec* vec, size_t veclen,
@@ -223,7 +224,7 @@ public:
 	void push_finalize(finalize_t fin, void* user);
 
 	template <typename T>
-	void push_finalize(std::auto_ptr<T> fin);
+	void push_finalize(std::unique_ptr<T> fin);
 
 	template <typename T>
 	void push_finalize(mp::shared_ptr<T> fin);
@@ -361,7 +362,7 @@ inline bool xfer::empty() const
 }
 
 template <typename T>
-inline void xfer::push_finalize(std::auto_ptr<T> fin)
+inline void xfer::push_finalize(std::unique_ptr<T> fin)
 {
 	push_finalize(&mp::object_delete<T>, reinterpret_cast<void*>(fin.get()));
 	fin.release();
@@ -370,13 +371,13 @@ inline void xfer::push_finalize(std::auto_ptr<T> fin)
 template <typename T>
 inline void xfer::push_finalize(mp::shared_ptr<T> fin)
 {
-	std::auto_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
+	std::unique_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
 	push_finalize(afin);
 }
 
 template <typename T>
 inline void loop::write(int fd, const void* buf, size_t size,
-		std::auto_ptr<T>& fin)
+		std::unique_ptr<T>& fin)
 {
 	write(fd, buf, size, &mp::object_delete<T>, fin.get());
 	fin.release();
@@ -386,13 +387,13 @@ template <typename T>
 inline void loop::write(int fd, const void* buf, size_t size,
 		mp::shared_ptr<T> fin)
 {
-	std::auto_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
+	std::unique_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
 	write(fd, buf, size, afin);
 }
 
 template <typename T>
 inline void loop::writev(int fd, const struct iovec* vec, size_t veclen,
-		std::auto_ptr<T>& fin)
+		std::unique_ptr<T>& fin)
 {
 	writev(fd, vec, veclen, &mp::object_delete<T>, fin.get());
 	fin.release();
@@ -402,7 +403,7 @@ template <typename T>
 inline void loop::writev(int fd, const struct iovec* vec, size_t veclen,
 		mp::shared_ptr<T> fin)
 {
-	std::auto_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
+	std::unique_ptr<mp::shared_ptr<T> > afin(new mp::shared_ptr<T>(fin));
 	writev(fd, vec, veclen, afin);
 }
 

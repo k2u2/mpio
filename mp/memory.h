@@ -2,6 +2,7 @@
 // mpio memory
 //
 // Copyright (C) 2008-2010 FURUHASHI Sadayuki
+// Copyright (C) 2022 k2u2 at github.com
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -18,17 +19,6 @@
 #ifndef MP_MEMORY_H__
 #define MP_MEMORY_H__
 
-#ifdef MP_MEMORY_BOOST
-#include <boost/tr1/memory>
-namespace mp {
-	using std::tr1::shared_ptr;
-	using std::tr1::wak_ptr;
-	//using std::tr2::scoped_ptr;
-	using std::tr1::static_pointer_cast;
-	using std::tr1::dynamic_pointer_cast;
-	using std::tr1::enable_shared_from_this;
-}
-#else
 #ifdef MP_MEMORY_BOOST_ORG
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
@@ -43,17 +33,6 @@ namespace mp {
 	using boost::enable_shared_from_this;
 }
 #else
-#ifndef MP_MEMORY_STANDARD
-#include <tr1/memory>
-namespace mp {
-	using std::tr1::shared_ptr;
-	using std::tr1::weak_ptr;
-	//using std::tr2::scoped_ptr;
-	using std::tr1::static_pointer_cast;
-	using std::tr1::dynamic_pointer_cast;
-	using std::tr1::enable_shared_from_this;
-}
-#else
 #include <memory>
 namespace mp {
 	using std::shared_ptr;
@@ -63,8 +42,6 @@ namespace mp {
 	using std::dynamic_pointer_cast;
 	using std::enable_shared_from_this;
 }
-#endif
-#endif
 #endif
 
 #endif /* mp/memory.h */
