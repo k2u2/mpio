@@ -256,7 +256,8 @@ void loop_impl::thread_main()
 			m_cond.signal();
 		}
 
-		ke = m_backlog[m_off++];
+		ke = m_backlog[m_off];
+		m_off = m_off + 1;
 
 		process_handler:
 		int ident = ke.ident();
@@ -365,7 +366,8 @@ void loop_impl::run_once(pthread_scoped_lock& lk, bool block)
 		m_cond.signal();
 	}
 
-	ke = m_backlog[m_off++];
+	ke = m_backlog[m_off];
+	m_off = m_off + 1;
 
 	process_handler:
 	int ident = ke.ident();
