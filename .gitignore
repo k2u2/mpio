@@ -1,0 +1,9 @@
+*.o
+*.a
+*.so
+/mp/object_callback.h
+/mp/sparse_array.h
+/mp/sync.h
+/mp/wavy.h
+/lib/
+/include/
