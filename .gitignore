@@ -1,6 +1,7 @@
 *.o
 *.a
 *.so
+*.cc_dep
 /mp/object_callback.h
 /mp/sparse_array.h
 /mp/sync.h
