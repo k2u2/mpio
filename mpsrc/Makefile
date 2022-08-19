@@ -25,7 +25,7 @@ clean :
 .PHONY: install
 install : $(TARGETS)
 	@mkdir -p $(LIB_DIR)
-	$(INSTALL) -s $(TARGETS) $(LIB_DIR)
+	$(INSTALL) $(TARGETS) $(LIB_DIR)
 
 libmpio.a : $(OBJS)
 	$(AR) $(ARFLAGS) $@ $?
